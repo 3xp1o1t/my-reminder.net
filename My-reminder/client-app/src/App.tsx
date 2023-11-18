@@ -1,22 +1,13 @@
-import React from 'react';
 import logo from './logo.svg';
-import './App.css';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
+    <div className="bg-gray-900 flex h-screen items-center justify-center">
+      <header className="flex flex-col gap-2 text-white text-center">
+        <img src={logo} className="w-64 h-64" alt="logo" />
+        <p>Mi aplicación</p>
+        <a href="https://reactjs.org" target="_blank" rel="noopener noreferrer">
+          Con React y TypeScript
         </a>
       </header>
     </div>
