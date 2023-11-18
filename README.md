@@ -12,10 +12,12 @@ de ReactJS 18 sobre net core 5 podría traer bugs desconocidos.`
 - Nodejs 'LTS'
 - TypeScript >= 4.9
 - TailwindCSS ~3.3
+- React-router-dom ~6.19
 
 ## Configuración
 
 - Crear un proyecto usando la plantilla Net con ReactJS en VS 2022
+- (opcional) Si se quiere usar un control de versiones sobre todo el proyecto en general, antes de eliminar app, crear un repositorio local desde la carpeta del proyecto.
 - Eliminar la carpeta ClientApp
 - Si queremos usar TypeScript, podemos ejecutar el siguiente
   comando con la opción template dentro del directorio donde antes
@@ -130,6 +132,124 @@ Resultado:
 ![preview](docs-imgs/previewTWworking.png)
 
 - Reiniciar la aplicación desde VS 2022
+
+## Instalar React-Router-Dom v6
+
+- Instalar usando la documentación oficial
+
+```bash
+$ npm i react-router-dom
+```
+
+- Crear la carpeta components dentro de src y agregar
+
+  - About.tsx
+  - Contact.tsx
+  - Home.tsx
+  - Navbar.tsx
+  - Repo.tsx
+
+- Crear el componente _Navbar.tsx_ para pruebas
+
+```tsx
+import { NavLink } from 'react-router-dom';
+
+type Props = {};
+
+const Navbar = (props: Props) => {
+  return (
+    <ul className="flex items-center justify-center gap-4 border-b h-14">
+      <li>
+        <NavLink
+          to={'/'}
+          className={({ isActive }) =>
+            [
+              'px-2 py-2.5 hover:bg-sky-300 hover:text-slate-100 rounded-md transition',
+              isActive ? 'bg-rose-500' : '',
+            ].join(' ')
+          }
+        >
+          Inicio
+        </NavLink>
+      </li>
+      <li>
+        <NavLink
+          to={'/contact'}
+          className={({ isActive }) =>
+            [
+              'px-2 py-2.5 hover:bg-sky-300 hover:text-slate-100 rounded-md transition',
+              isActive ? 'bg-rose-500' : '',
+            ].join(' ')
+          }
+        >
+          Contacto
+        </NavLink>
+      </li>
+      <li>
+        <NavLink
+          to={'/about'}
+          className={({ isActive }) =>
+            [
+              'px-2 py-2.5 hover:bg-sky-300 hover:text-slate-100 rounded-md transition',
+              isActive ? 'bg-rose-500' : '',
+            ].join(' ')
+          }
+        >
+          Acerca de
+        </NavLink>
+      </li>
+      <li>
+        <NavLink
+          to={'/repo'}
+          className={({ isActive }) =>
+            [
+              'px-2 py-2.5 hover:bg-sky-300 hover:text-slate-100 rounded-md transition',
+              isActive ? 'bg-rose-500' : '',
+            ].join(' ')
+          }
+        >
+          Repositorio
+        </NavLink>
+      </li>
+    </ul>
+  );
+};
+
+export default Navbar;
+```
+
+- Escribir el siguiente código en App.tsx
+
+```tsx
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import About from './components/About';
+import Contact from './components/Contact';
+import Home from './components/Home';
+import Navbar from './components/Navbar';
+import Repo from './components/Repo';
+
+function App() {
+  return (
+    <BrowserRouter>
+      <Navbar />
+      <Routes>
+        <Route path="/" element={<Home />}></Route>
+        <Route path="/contact" element={<Contact />}></Route>
+        <Route path="/about" element={<About />}></Route>
+        <Route path="/repo" element={<Repo />}></Route>
+      </Routes>
+    </BrowserRouter>
+  );
+}
+
+export default App;
+```
+
+Verificamos el funcionamiento, si por alguna razón no funciona, reiniciamos el proyecto debido a la instalación de react-router-dom
+
+Resultado:
+
+![PreviewReactRouter](docs-imgs/reactRouterTest.png)
 
 ## Referencias
 

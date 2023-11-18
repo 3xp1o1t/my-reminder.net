@@ -1,16 +1,21 @@
-import logo from './logo.svg';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import About from './components/About';
+import Contact from './components/Contact';
+import Home from './components/Home';
+import Navbar from './components/Navbar';
+import Repo from './components/Repo';
 
 function App() {
   return (
-    <div className="bg-gray-900 flex h-screen items-center justify-center">
-      <header className="flex flex-col gap-2 text-white text-center">
-        <img src={logo} className="w-64 h-64" alt="logo" />
-        <p>Mi aplicación</p>
-        <a href="https://reactjs.org" target="_blank" rel="noopener noreferrer">
-          Con React y TypeScript
-        </a>
-      </header>
-    </div>
+    <BrowserRouter>
+      <Navbar />
+      <Routes>
+        <Route path="/" element={<Home />}></Route>
+        <Route path="/contact" element={<Contact />}></Route>
+        <Route path="/about" element={<About />}></Route>
+        <Route path="/repo" element={<Repo />}></Route>
+      </Routes>
+    </BrowserRouter>
   );
 }
 
