@@ -15,6 +15,7 @@ de ReactJS 18 sobre net core 5 podría traer bugs desconocidos.`
   - [Instalación de TailwindCSS](#instalación-de-tailwindcss)
   - [Instalar React-Router-Dom v6](#instalar-react-router-dom-v6)
   - [Instalar Tailwind-merge y clsx](#instalar-tailwind-merge-y-clsx)
+  - [Instalación de React-Hook-Form y Zod](#instalación-de-react-hook-form-y-zod)
   - [Referencias](#referencias)
   - [Acerca de](#acerca-de)
 
@@ -313,6 +314,25 @@ Si la utilizamos en nuestros _Navlink_ en lugar de usar .join y un array, queda 
   Inicio
 </NavLink>
 ```
+
+## Instalación de React-Hook-Form y Zod
+
+`Recordatorio, ejecutar sobre client-app`
+
+```bash
+npm i react-hook-form zod @hookform/resolvers
+npm i react-icons
+```
+
+React-icons es una lib para utilizar algunos iconos especiales.
+
+- Creamos un componente llamado _Signup.tsx_ el cual nos permitirá probar todo a la vez, React-hook-form, zod, resolver y el icono de react.
+- Agregamos las rutas y componente a _App.tsx_
+- Agregamos el link de navegación en _Navbar.tsx_
+
+Verificamos el funcionamiento con el código agregado a _Signup.tsx_
+
+![rhfZodTest](docs-imgs/rhfZodTest.png)
 
 ## Referencias
 

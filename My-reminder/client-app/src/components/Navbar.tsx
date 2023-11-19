@@ -58,6 +58,19 @@ const Navbar = (props: Props) => {
           Repositorio
         </NavLink>
       </li>
+      <li>
+        <NavLink
+          to={'/sign-up'}
+          className={({ isActive }) =>
+            cn(
+              'px-2 py-2.5 hover:bg-sky-300 hover:text-slate-100 rounded-md transition',
+              isActive ? 'bg-rose-500' : '',
+            )
+          }
+        >
+          Sign-up
+        </NavLink>
+      </li>
     </ul>
   );
 };
