@@ -1,4 +1,5 @@
 import { NavLink } from 'react-router-dom';
+import { cn } from '../lib/utils';
 
 type Props = {};
 
@@ -9,10 +10,10 @@ const Navbar = (props: Props) => {
         <NavLink
           to={'/'}
           className={({ isActive }) =>
-            [
+            cn(
               'px-2 py-2.5 hover:bg-sky-300 hover:text-slate-100 rounded-md transition',
               isActive ? 'bg-rose-500' : '',
-            ].join(' ')
+            )
           }
         >
           Inicio
@@ -22,10 +23,10 @@ const Navbar = (props: Props) => {
         <NavLink
           to={'/contact'}
           className={({ isActive }) =>
-            [
+            cn(
               'px-2 py-2.5 hover:bg-sky-300 hover:text-slate-100 rounded-md transition',
               isActive ? 'bg-rose-500' : '',
-            ].join(' ')
+            )
           }
         >
           Contacto
@@ -35,10 +36,10 @@ const Navbar = (props: Props) => {
         <NavLink
           to={'/about'}
           className={({ isActive }) =>
-            [
+            cn(
               'px-2 py-2.5 hover:bg-sky-300 hover:text-slate-100 rounded-md transition',
               isActive ? 'bg-rose-500' : '',
-            ].join(' ')
+            )
           }
         >
           Acerca de
@@ -48,10 +49,10 @@ const Navbar = (props: Props) => {
         <NavLink
           to={'/repo'}
           className={({ isActive }) =>
-            [
+            cn(
               'px-2 py-2.5 hover:bg-sky-300 hover:text-slate-100 rounded-md transition',
               isActive ? 'bg-rose-500' : '',
-            ].join(' ')
+            )
           }
         >
           Repositorio

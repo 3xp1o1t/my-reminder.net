@@ -5,6 +5,19 @@ Aplicación creada con ReactJs, Net Core 5, TailwindCSS y TypeScript.
 `Esta aplicación fue realizada con fines de aprendizaje, la integración
 de ReactJS 18 sobre net core 5 podría traer bugs desconocidos.`
 
+## Tabla de contenidos
+
+- [Aplicación de recordatorios](#aplicación-de-recordatorios)
+  - [Tabla de contenidos](#tabla-de-contenidos)
+  - [Requerimientos](#requerimientos)
+  - [Configuración](#configuración)
+    - [Iniciar la aplicación desde VS 2022 usando IIS Express](#iniciar-la-aplicación-desde-vs-2022-usando-iis-express)
+  - [Instalación de TailwindCSS](#instalación-de-tailwindcss)
+  - [Instalar React-Router-Dom v6](#instalar-react-router-dom-v6)
+  - [Instalar Tailwind-merge y clsx](#instalar-tailwind-merge-y-clsx)
+  - [Referencias](#referencias)
+  - [Acerca de](#acerca-de)
+
 ## Requerimientos
 
 - ReactJS >=16
@@ -25,7 +38,7 @@ de ReactJS 18 sobre net core 5 podría traer bugs desconocidos.`
 
 ```bash
 # El nombre ClientApp se remplazo por client-app por razones del gestor npm
-$ npx create-react-app client-app --template typescript
+npx create-react-app client-app --template typescript
 ```
 
 - Editar el archivo del proyecto _.csproj_ en mi caso (My-reminder.csproj)
@@ -54,7 +67,7 @@ $ npx create-react-app client-app --template typescript
 
 ```bash
 # Ejecutar dentro del directorio client-app
-$ npm i ts-node @types/node -D
+npm i ts-node @types/node -D
 ```
 
 - Cambiar _ES5_ a _ES6_ y _esnext_ en _tsconfig.json_
@@ -66,7 +79,7 @@ $ npm i ts-node @types/node -D
 
 ### Iniciar la aplicación desde VS 2022 usando IIS Express
 
-## Si la aplicación no funciona
+`Si la aplicación no funciona`
 
 Agregar la opción _module_ a _package.json_
 
@@ -105,9 +118,10 @@ Reiniciar _Visual Studio 2022_
 }
 ```
 
-- Agregar algunas clases a App.tsx
+- Agregar algunas clases a _App.tsx_
 
-```typescript
+```tsx
+// App.tsx
 import logo from './logo.svg';
 
 function App() {
@@ -138,7 +152,7 @@ Resultado:
 - Instalar usando la documentación oficial
 
 ```bash
-$ npm i react-router-dom
+npm i react-router-dom
 ```
 
 - Crear la carpeta components dentro de src y agregar
@@ -152,6 +166,7 @@ $ npm i react-router-dom
 - Crear el componente _Navbar.tsx_ para pruebas
 
 ```tsx
+// Navbar.tsx
 import { NavLink } from 'react-router-dom';
 
 type Props = {};
@@ -218,9 +233,10 @@ const Navbar = (props: Props) => {
 export default Navbar;
 ```
 
-- Escribir el siguiente código en App.tsx
+- Escribir el siguiente código en _App.tsx_
 
 ```tsx
+// App.tsx
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import About from './components/About';
 import Contact from './components/Contact';
@@ -251,10 +267,59 @@ Resultado:
 
 ![PreviewReactRouter](docs-imgs/reactRouterTest.png)
 
+## Instalar Tailwind-merge y clsx
+
+Estas dos librerías en conjunto permiten mezclar las clases correctamente de tailwind y al crear una función de utilidad que podemos utilizar
+en cualquier parte del código, no solo en links.
+
+```bash
+npm i tailwind-merge clsx
+```
+
+Dentro de _client-app/src_ creamos el folder _lib_
+el cual nos permitirá crear funciones helper para reutilizar en todo el proyecto
+
+Dentro de lib, creamos el archivo _utils.ts_
+
+En este archivo, escribiremos las funciones de utilidad, en este caso la
+función _cn_ para combinar las clases.
+
+```tsx
+// lib/utils.ts
+import { clsx, type ClassValue } from 'clsx';
+import { twMerge } from 'tailwind-merge';
+
+export function cn(...inputs: ClassValue[]) {
+  return twMerge(clsx(inputs));
+}
+```
+
+Si la utilizamos en nuestros _Navlink_ en lugar de usar .join y un array, queda mejor el código y ademas la función no se cierra unicamente a los links, permitiéndonos usarla en varios componentes.
+
+```tsx
+// Ejemplo de un navlink usando la función cn
+// La función cn, recibe las clases por default, y después de la comma
+// podemos agregar mas condicionales, dado que los inputs recibidos son un arreglos de strings (ClassValues).
+
+<NavLink
+  to={'/'}
+  className={({ isActive }) =>
+    cn(
+      'px-2 py-2.5 hover:bg-sky-300 hover:text-slate-100 rounded-md transition',
+      isActive ? 'bg-rose-500' : '',
+    )
+  }
+>
+  Inicio
+</NavLink>
+```
+
 ## Referencias
 
 - [Net-React-TypeScript-Template](https://bradshawdotnet.hashnode.dev/net-react-typescript-template)
 
 - [TailwindCSS using Create-react-app](https://tailwindcss.com/docs/guides/create-react-app)
+
+- [Using clsx with tailwind-merge](https://akhilaariyachandra.com/snippets/using-clsx-or-classnames-with-tailwind-merge)
 
 ## Acerca de
