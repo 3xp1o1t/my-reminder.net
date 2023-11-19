@@ -16,6 +16,7 @@ de ReactJS 18 sobre net core 5 podría traer bugs desconocidos.`
   - [Instalar React-Router-Dom v6](#instalar-react-router-dom-v6)
   - [Instalar Tailwind-merge y clsx](#instalar-tailwind-merge-y-clsx)
   - [Instalación de React-Hook-Form y Zod](#instalación-de-react-hook-form-y-zod)
+  - [Refactor de rutas](#refactor-de-rutas)
   - [Referencias](#referencias)
   - [Acerca de](#acerca-de)
 
@@ -334,6 +335,156 @@ Verificamos el funcionamiento con el código agregado a _Signup.tsx_
 
 ![rhfZodTest](docs-imgs/rhfZodTest.png)
 
+## Refactor de rutas
+
+Tener un mejor control del flujo del sitio/aplicación web nos ayuda a
+escalarlo sin la necesidad de modificar demasiado código.
+
+Para tener una mejor estructura de navegación con react router, vamos a implementar
+la carpeta _pages_, dentro una sub-carpeta con el nombre del componente _Home_ por ejemplo y en dicha sub-carpeta el archivo _index.tsx_, el cual sera importado automáticamente con un enrutador (handcrafted).
+
+- Creamos la carpeta _pages_ dentro de _src_
+- Añadimos un subdirectorio para cada link a una pagina
+  - Home
+  - Contact
+  - etc...
+- Añadimos los archivos _index.tsx_ en cada directorio nuevo
+- En Auth, agregamos dos subdirectorios para el sign-in y el sign-up
+- Debido al uso de TypeScript, creamos la carpeta Types para los tipos de los route que vamos a generar y sus child routes.
+- En _pages_ agregamos dos archivos nuevos para configurar nuestros paths y para generar las rutas automáticamente.
+
+_/src/types/router.types.ts_
+
+```ts
+// children => Opcional en caso de no tener nested routes
+export interface routerType {
+  title: string;
+  path: string;
+  element: JSX.Element;
+  children?: routerType[];
+}
+```
+
+_pagesData.tsx_
+
+```tsx
+// pagesData.tsx - Objeto para las rutas
+import { routerType } from '../types/router.types';
+import About from './About';
+import Signin from './Auth/Signin';
+import Signup from './Auth/Signup';
+import Contact from './Contact';
+import Error from './Error';
+import Home from './Home';
+import Landing from './Landing';
+import Repo from './Repo';
+
+const pagesData: routerType[] = [
+  {
+    title: 'Error',
+    path: '*',
+    element: <Error />,
+  },
+  {
+    title: 'home',
+    path: '/',
+    element: <Home />,
+  },
+  {
+    title: 'about',
+    path: 'about',
+    element: <About />,
+  },
+  {
+    title: 'contact',
+    path: 'contact',
+    element: <Contact />,
+  },
+  {
+    title: 'repo',
+    path: 'repo',
+    element: <Repo />,
+  },
+  {
+    title: 'auth',
+    path: 'auth',
+    element: <Landing />,
+    children: [
+      {
+        path: 'sign-in',
+        element: <Signin />,
+        title: 'sign-in',
+      },
+      {
+        path: 'sign-up',
+        element: <Signup />,
+        title: 'sign-up',
+      },
+    ],
+  },
+];
+
+export default pagesData;
+```
+
+_router.tsx_
+
+```tsx
+// Funciones para añadir las rutas y sus hijos si existen
+import { Route, Routes } from 'react-router-dom';
+import { routerType } from '../types/router.types';
+import pagesData from './pagesData';
+
+const renderRoutes = (routes: routerType[]) => {
+  return routes.map(({ title, path, element, children = [] }) => {
+    return (
+      <Route key={title} path={path} element={element}>
+        {children.length > 0 && <Route>{renderRoutes(children)}</Route>}
+      </Route>
+    );
+  });
+};
+
+const Router = () => {
+  const pageRoutes = renderRoutes(pagesData);
+  return <Routes>{pageRoutes}</Routes>;
+};
+
+export default Router;
+```
+
+_App.tsx_
+
+```tsx
+// App.tsx -> Cambia la forma de renderizar las rutas
+import { BrowserRouter } from 'react-router-dom';
+import Navbar from './components/Navbar';
+import Router from './pages/router';
+
+function App() {
+  return (
+    <BrowserRouter>
+      <Navbar />
+      <Router />
+    </BrowserRouter>
+  );
+}
+
+export default App;
+```
+
+Las ventajas de hacerlo de esta manera son las siguientes:
+
+- Código limpio/estructurado/fácil de mantener.
+- Estilos CSS en carpetas separadas para cada sitio.
+- Fácil adhesion de rutas protegidas/privadas.
+- Separar componentes de sitios específicos.
+- Aplicar layout globales para N paginas.
+
+Las desventajas encontradas:
+
+- Cerrar algunas funciones especificas con los routes
+
 ## Referencias
 
 - [Net-React-TypeScript-Template](https://bradshawdotnet.hashnode.dev/net-react-typescript-template)
@@ -341,5 +492,7 @@ Verificamos el funcionamiento con el código agregado a _Signup.tsx_
 - [TailwindCSS using Create-react-app](https://tailwindcss.com/docs/guides/create-react-app)
 
 - [Using clsx with tailwind-merge](https://akhilaariyachandra.com/snippets/using-clsx-or-classnames-with-tailwind-merge)
+
+- [The right way to structure your react router](https://dev.to/kachiic/the-right-way-structure-your-react-router-1i3l)
 
 ## Acerca de

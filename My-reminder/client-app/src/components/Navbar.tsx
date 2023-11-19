@@ -60,7 +60,7 @@ const Navbar = (props: Props) => {
       </li>
       <li>
         <NavLink
-          to={'/sign-up'}
+          to={'/auth/sign-up'}
           className={({ isActive }) =>
             cn(
               'px-2 py-2.5 hover:bg-sky-300 hover:text-slate-100 rounded-md transition',
