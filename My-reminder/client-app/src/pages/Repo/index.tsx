@@ -1,7 +1,11 @@
 type Props = {};
 
 const Repo = (props: Props) => {
-  return <h1 className="font-bold text-3xl">Repo</h1>;
+  return (
+    <div className="flex w-full flex-grow items-center justify-center relative">
+      <h1 className="font-bold text-5xl">R E P O</h1>
+    </div>
+  );
 };
 
 export default Repo;

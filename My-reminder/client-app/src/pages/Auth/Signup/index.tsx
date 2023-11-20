@@ -1,6 +1,5 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { AiOutlineLoading } from 'react-icons/ai';
 import { Link } from 'react-router-dom';
 import { z } from 'zod';
 import { cn } from '../../../lib/utils';
@@ -123,7 +122,7 @@ const Index = () => {
           disabled={isSubmitting}
         >
           {isSubmitting ? (
-            <AiOutlineLoading className="h-6 w-6 animate-spin inline-block cursor-not-allowed" />
+            <span className="animate-ping">Cargando...</span>
           ) : (
             'Enviar'
           )}

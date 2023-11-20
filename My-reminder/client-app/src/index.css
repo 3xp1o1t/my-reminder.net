@@ -5,5 +5,12 @@
 * {
   margin: 0;
   padding: 0;
-  box-sizing: 0;
+  box-sizing: border-box;
+}
+
+@layer base {
+  body {
+    background: hsl(224 71.4% 4.1%);
+    color: hsl(210 20% 98%);
+  }
 }

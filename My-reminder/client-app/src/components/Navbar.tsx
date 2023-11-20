@@ -1,76 +1,25 @@
 import { NavLink } from 'react-router-dom';
+import { HEADER_MENUS } from '../constants';
 import { cn } from '../lib/utils';
 
-type Props = {};
-
-const Navbar = (props: Props) => {
+const Navbar = () => {
   return (
     <ul className="flex items-center justify-center gap-4 border-b h-14">
-      <li>
-        <NavLink
-          to={'/'}
-          className={({ isActive }) =>
-            cn(
-              'px-2 py-2.5 hover:bg-sky-300 hover:text-slate-100 rounded-md transition',
-              isActive ? 'bg-rose-500' : '',
-            )
-          }
-        >
-          Inicio
-        </NavLink>
-      </li>
-      <li>
-        <NavLink
-          to={'/contact'}
-          className={({ isActive }) =>
-            cn(
-              'px-2 py-2.5 hover:bg-sky-300 hover:text-slate-100 rounded-md transition',
-              isActive ? 'bg-rose-500' : '',
-            )
-          }
-        >
-          Contacto
-        </NavLink>
-      </li>
-      <li>
-        <NavLink
-          to={'/about'}
-          className={({ isActive }) =>
-            cn(
-              'px-2 py-2.5 hover:bg-sky-300 hover:text-slate-100 rounded-md transition',
-              isActive ? 'bg-rose-500' : '',
-            )
-          }
-        >
-          Acerca de
-        </NavLink>
-      </li>
-      <li>
-        <NavLink
-          to={'/repo'}
-          className={({ isActive }) =>
-            cn(
-              'px-2 py-2.5 hover:bg-sky-300 hover:text-slate-100 rounded-md transition',
-              isActive ? 'bg-rose-500' : '',
-            )
-          }
-        >
-          Repositorio
-        </NavLink>
-      </li>
-      <li>
-        <NavLink
-          to={'/auth/sign-up'}
-          className={({ isActive }) =>
-            cn(
-              'px-2 py-2.5 hover:bg-sky-300 hover:text-slate-100 rounded-md transition',
-              isActive ? 'bg-rose-500' : '',
-            )
-          }
-        >
-          Sign-up
-        </NavLink>
-      </li>
+      {HEADER_MENUS.map((menu) => (
+        <li key={menu.title}>
+          <NavLink
+            to={menu.slug}
+            className={({ isActive }) =>
+              cn(
+                'px-2 py-2.5 hover:bg-sky-300 hover:text-slate-900 rounded-md transition',
+                isActive ? 'bg-rose-500' : '',
+              )
+            }
+          >
+            {menu.title}
+          </NavLink>
+        </li>
+      ))}
     </ul>
   );
 };
